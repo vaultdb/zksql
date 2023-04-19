@@ -1,0 +1,395 @@
+{
+  "rels": [
+    {
+      "id": "0",
+      "relOp": "JdbcTableScan",
+      "table": [
+        "customer"
+      ],
+      "inputs": []
+    },
+    {
+      "id": "1",
+      "relOp": "LogicalProject",
+      "fields": [
+        "c_custkey",
+        "c_mktsegment"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "input": 6,
+          "name": "$6"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "relOp": "LogicalFilter",
+      "condition": {
+        "op": {
+          "name": "=",
+          "kind": "EQUALS",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 1,
+            "name": "$1"
+          },
+          {
+            "literal": "HOUSEHOLD ",
+            "type": {
+              "type": "CHAR",
+              "nullable": false,
+              "precision": 10
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "relOp": "LogicalProject",
+      "fields": [
+        "c_custkey"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "relOp": "JdbcTableScan",
+      "table": [
+        "orders"
+      ],
+      "inputs": []
+    },
+    {
+      "id": "5",
+      "relOp": "LogicalProject",
+      "fields": [
+        "o_orderkey",
+        "o_custkey",
+        "o_orderdate",
+        "o_shippriority"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "input": 1,
+          "name": "$1"
+        },
+        {
+          "input": 4,
+          "name": "$4"
+        },
+        {
+          "input": 7,
+          "name": "$7"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "relOp": "LogicalFilter",
+      "condition": {
+        "op": {
+          "name": "<",
+          "kind": "LESS_THAN",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 2,
+            "name": "$2"
+          },
+          {
+            "literal": 796089600,
+            "type": {
+              "type": "LONG",
+              "nullable": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "7",
+      "relOp": "LogicalJoin",
+      "condition": {
+        "op": {
+          "name": "=",
+          "kind": "EQUALS",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 0,
+            "name": "$0"
+          },
+          {
+            "input": 2,
+            "name": "$2"
+          }
+        ]
+      },
+      "joinType": "inner",
+      "foreignKey": 1,
+      "inputs": [
+        "3",
+        "6"
+      ]
+    },
+    {
+      "id": "8",
+      "relOp": "JdbcTableScan",
+      "table": [
+        "lineitem"
+      ],
+      "inputs": []
+    },
+    {
+      "id": "9",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_orderkey",
+        "l_extendedprice",
+        "l_discount",
+        "l_shipdate"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "input": 5,
+          "name": "$5"
+        },
+        {
+          "input": 6,
+          "name": "$6"
+        },
+        {
+          "input": 10,
+          "name": "$10"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "relOp": "LogicalFilter",
+      "condition": {
+        "op": {
+          "name": ">",
+          "kind": "GREATER_THAN",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 3,
+            "name": "$3"
+          },
+          {
+            "literal": 796089600,
+            "type": {
+              "type": "LONG",
+              "nullable": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "11",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_orderkey",
+        "revenue"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "op": {
+            "name": "*",
+            "kind": "TIMES",
+            "syntax": "BINARY"
+          },
+          "operands": [
+            {
+              "input": 1,
+              "name": "$1"
+            },
+            {
+              "op": {
+                "name": "-",
+                "kind": "MINUS",
+                "syntax": "BINARY"
+              },
+              "operands": [
+                {
+                  "literal": 100,
+                  "type": {
+                    "type": "LONG",
+                    "nullable": false
+                  }
+                },
+                {
+                  "input": 2,
+                  "name": "$2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "relOp": "LogicalJoin",
+      "condition": {
+        "op": {
+          "name": "=",
+          "kind": "EQUALS",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 5,
+            "name": "$5"
+          },
+          {
+            "input": 1,
+            "name": "$1"
+          }
+        ]
+      },
+      "joinType": "inner",
+      "foreignKey": 1,
+      "inputs": [
+        "7",
+        "11"
+      ]
+    },
+    {
+      "id": "13",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_orderkey",
+        "o_orderdate",
+        "o_shippriority",
+        "revenue"
+      ],
+      "exprs": [
+        {
+          "input": 5,
+          "name": "$5"
+        },
+        {
+          "input": 3,
+          "name": "$3"
+        },
+        {
+          "input": 4,
+          "name": "$4"
+        },
+        {
+          "input": 6,
+          "name": "$6"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "relOp": "LogicalAggregate",
+      "group": [
+        0,
+        1,
+        2
+      ],
+      "aggs": [
+        {
+          "agg": {
+            "name": "SUM",
+            "kind": "SUM",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            3
+          ],
+          "name": "revenue"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "relOp": "LogicalSort",
+      "collation": [
+        {
+          "field": 3,
+          "direction": "DESCENDING",
+          "nulls": "FIRST"
+        },
+        {
+          "field": 1,
+          "direction": "ASCENDING",
+          "nulls": "LAST"
+        }
+      ],
+      "fetch": {
+        "literal": 10,
+        "type": {
+          "type": "INTEGER",
+          "nullable": false
+        }
+      }
+    },
+    {
+      "id": "16",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_orderkey",
+        "revenue",
+        "o_orderdate",
+        "o_shippriority"
+      ],
+      "exprs": [
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "input": 3,
+          "name": "$3"
+        },
+        {
+          "input": 1,
+          "name": "$1"
+        },
+        {
+          "input": 2,
+          "name": "$2"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+#List the workers and their associated databases here
+#workerName=host:psqlPort,db name,vaultdb root,emp port,vaultdb id (must be distinct, internal use)
+alice=localhost:5432,tpch_alice,$VAULTDB_ROOT,54321,1
+bob=localhost:5432,tpch_bob,$VAULTDB_ROOT,54321,2
+unioned=localhost:5432,tpch_unioned,$VAULTDB_ROOT,54321,3

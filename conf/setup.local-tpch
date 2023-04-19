@@ -1,0 +1,30 @@
+#configuration for local run of tpc-h
+#configure locations
+schema-name=tpch
+local-codegen-target=src/main/java/org/vaultdb/compiler/emp/generated
+data-providers=conf/connections/tpch-hosts
+has-partitioning=false
+
+
+mpc-lib=emp
+emp-port=54321
+generated-class-prefix=org.vaultdb.compiler.emp.generated
+#set to debug to disable pushing filter up to select
+code-generator-mode=release 
+schema-definition=conf/workload/tpch/tpch-schema.sql
+
+#i.e., discount for running it in plaintext is 1/1000
+local-discount=0.001 
+
+#privacy consumed by each operator
+epsilon=0.1
+delta=0.0
+
+#postgres credentials and info
+[psql]
+host=localhost
+port=5432
+db=tpch_unioned
+user=vaultdb
+password=vaultdb123
+log-level=debug

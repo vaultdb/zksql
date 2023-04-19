@@ -1,0 +1,361 @@
+{
+  "rels": [
+    {
+      "id": "0",
+      "relOp": "JdbcTableScan",
+      "table": [
+        "lineitem"
+      ],
+      "inputs": []
+    },
+    {
+      "id": "1",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_quantity",
+        "l_extendedprice",
+        "l_discount",
+        "l_tax",
+        "l_returnflag",
+        "l_linestatus",
+        "l_shipdate"
+      ],
+      "exprs": [
+        {
+          "input": 4,
+          "name": "$4"
+        },
+        {
+          "input": 5,
+          "name": "$5"
+        },
+        {
+          "input": 6,
+          "name": "$6"
+        },
+        {
+          "input": 7,
+          "name": "$7"
+        },
+        {
+          "input": 8,
+          "name": "$8"
+        },
+        {
+          "input": 9,
+          "name": "$9"
+        },
+        {
+          "input": 10,
+          "name": "$10"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "relOp": "LogicalFilter",
+      "condition": {
+        "op": {
+          "name": "<=",
+          "kind": "LESS_THAN_OR_EQUAL",
+          "syntax": "BINARY"
+        },
+        "operands": [
+          {
+            "input": 6,
+            "name": "$6"
+          },
+          {
+            "literal": 902102400,
+            "type": {
+              "type": "LONG",
+              "nullable": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "relOp": "LogicalProject",
+      "fields": [
+        "l_returnflag",
+        "l_linestatus",
+        "l_quantity",
+        "l_extendedprice",
+        "disc_price",
+        "charge",
+        "l_discount"
+      ],
+      "exprs": [
+        {
+          "input": 4,
+          "name": "$4"
+        },
+        {
+          "input": 5,
+          "name": "$5"
+        },
+        {
+          "input": 0,
+          "name": "$0"
+        },
+        {
+          "input": 1,
+          "name": "$1"
+        },
+        {
+          "op": {
+            "name": "*",
+            "kind": "TIMES",
+            "syntax": "BINARY"
+          },
+          "operands": [
+            {
+              "input": 1,
+              "name": "$1"
+            },
+            {
+              "op": {
+                "name": "-",
+                "kind": "MINUS",
+                "syntax": "BINARY"
+              },
+              "operands": [
+                {
+                  "literal": 100,
+                  "type": {
+                    "type": "LONG",
+                    "nullable": false
+                  }
+                },
+                {
+                  "input": 2,
+                  "name": "$2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": {
+            "name": "*",
+            "kind": "TIMES",
+            "syntax": "BINARY"
+          },
+          "operands": [
+            {
+              "op": {
+                "name": "*",
+                "kind": "TIMES",
+                "syntax": "BINARY"
+              },
+              "operands": [
+                {
+                  "input": 1,
+                  "name": "$1"
+                },
+                {
+                  "op": {
+                    "name": "-",
+                    "kind": "MINUS",
+                    "syntax": "BINARY"
+                  },
+                  "operands": [
+                    {
+                      "literal": 100,
+                      "type": {
+                        "type": "LONG",
+                        "nullable": false
+                      }
+                    },
+                    {
+                      "input": 2,
+                      "name": "$2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": {
+                "name": "+",
+                "kind": "PLUS",
+                "syntax": "BINARY"
+              },
+              "operands": [
+                {
+                  "literal": 100,
+                  "type": {
+                    "type": "LONG",
+                    "nullable": false
+                  }
+                },
+                {
+                  "input": 3,
+                  "name": "$3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "input": 2,
+          "name": "$2"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "relOp": "LogicalAggregate",
+      "group": [
+        0,
+        1
+      ],
+      "aggs": [
+        {
+          "agg": {
+            "name": "SUM",
+            "kind": "SUM",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            2
+          ],
+          "name": "sum_qty"
+        },
+        {
+          "agg": {
+            "name": "SUM",
+            "kind": "SUM",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            3
+          ],
+          "name": "sum_base_price"
+        },
+        {
+          "agg": {
+            "name": "SUM",
+            "kind": "SUM",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            4
+          ],
+          "name": "sum_disc_price"
+        },
+        {
+          "agg": {
+            "name": "SUM",
+            "kind": "SUM",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            5
+          ],
+          "name": "sum_charge"
+        },
+        {
+          "agg": {
+            "name": "AVG",
+            "kind": "AVG",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            2
+          ],
+          "name": "avg_qty"
+        },
+        {
+          "agg": {
+            "name": "AVG",
+            "kind": "AVG",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            3
+          ],
+          "name": "avg_price"
+        },
+        {
+          "agg": {
+            "name": "AVG",
+            "kind": "AVG",
+            "syntax": "FUNCTION"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": true
+          },
+          "distinct": false,
+          "operands": [
+            6
+          ],
+          "name": "avg_disc"
+        },
+        {
+          "agg": {
+            "name": "COUNT",
+            "kind": "COUNT",
+            "syntax": "FUNCTION_STAR"
+          },
+          "type": {
+            "type": "LONG",
+            "nullable": false
+          },
+          "distinct": false,
+          "operands": [],
+          "name": "count_order"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "relOp": "LogicalSort",
+      "collation": [
+        {
+          "field": 0,
+          "direction": "ASCENDING",
+          "nulls": "LAST"
+        },
+        {
+          "field": 1,
+          "direction": "ASCENDING",
+          "nulls": "LAST"
+        }
+      ]
+    }
+  ]
+}
