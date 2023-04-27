@@ -16,7 +16,7 @@
 `sudo ufw allow 4789/udp`
 
 #### Pull docker image
-`sudo docker pull jennierogers/vaultdb-deployment:latest`
+`sudo docker pull jennierogers/vaultdb-deployment:zksql`
 ### On Alice
 #### Use Alice instance as docker swarm manager
 `sudo docker swarm init`
@@ -28,10 +28,10 @@
 `sudo docker network create -d overlay --subnet=126.137.1.0/24 --attachable vaultdb-net`
 ### On Bob
 #### Create container
-`sudo docker run -itd --network vaultdb-net --ip 126.137.1.20 --name vaultdb-container jennierogers/vaultdb-deployment:latest`
+`sudo docker run -itd --network vaultdb-net --ip 126.137.1.20 --name vaultdb-container jennierogers/vaultdb-deployment:zksql`
 ### On Alice
 #### Create container
-`sudo docker run -itd --network vaultdb-net --ip 126.137.1.10 --name vaultdb-container jennierogers/vaultdb-deployment:latest`
+`sudo docker run -itd --network vaultdb-net --ip 126.137.1.10 --name vaultdb-container jennierogers/vaultdb-deployment:zksql`
 ### On each aws instance
 #### Enter the container
 `sudo docker exec -u vaultdb -it vaultdb-container /bin/bash`
