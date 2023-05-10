@@ -76,5 +76,9 @@ make
 sudo make install
 cd ..
 
+# For the network throughput experiment shown in Section 5.6, we can use Linux tc command on each party to simulate low-bandwidth environment.
+# Please replace BANDWIDTH to a desired numerical value (e.g. 20 for 20Mbps).
+# sudo tc qdisc add dev DEV root handle 1: tbf rate BANDWIDTHmbit burst 100000 limit 10000 
+
 #end
 echo "Setup completed successfully."
