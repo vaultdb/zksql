@@ -112,7 +112,7 @@ make tpch_test
 References
 --------------------------------------------------------------------------------
 
-Xiling Li and Chenkai Weng and Yongxin Xu and Xiao Wang and Jennie Rogers. ZKSQL: Verifiable and Efficient Query Evaluation with Zero-Knowledge Proofs, In Proceedings of the VLDB Endowment (PVLDB), Volume 16, Issue 8, 2023.
+Xiling Li and Chenkai Weng and Yongxin Xu and Xiao Wang and Jennie Rogers. [ZKSQL: Verifiable and Efficient Query Evaluation with Zero-Knowledge Proofs](https://www.vldb.org/pvldb/vol16/p1804-li.pdf), In Proceedings of the VLDB Endowment (PVLDB), Volume 16, Issue 8, 2023.
 
 Xiao Wang, Alex J. Malozemoff, and Jonathan Katz. EMP-toolkit: Efficient MultiParty computation toolkit. https://github.com/emp-toolkit,  2016. 
 
