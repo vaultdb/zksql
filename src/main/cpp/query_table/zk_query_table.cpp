@@ -15,7 +15,7 @@ ZkQueryTable::ZkQueryTable(const QuerySchema &schema, const SortDefinition &orde
         uint32_t tuple_cnt;
 
 
-        netio->io->recv_data(&tuple_cnt, 4);
+        netio->recv_data(&tuple_cnt, 4);
 
         secure_table_ = SecureTable::secret_share_recv_table(tuple_cnt, schema, order_by, emp::ALICE);
     }
@@ -45,7 +45,7 @@ ZkQueryTable::ZkQueryTable(shared_ptr<PlainTable> input, BoolIO<NetIO> *netio, c
         netio_ = netio;
         uint32_t tuple_cnt = input->getTupleCount();
 
-        netio->io->send_data(&tuple_cnt, 4);
+        netio->send_data(&tuple_cnt, 4);
         secure_table_ = PlainTable::secret_share_send_table(input, party_);
     }
     else

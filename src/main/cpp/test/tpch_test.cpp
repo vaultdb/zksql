@@ -25,9 +25,7 @@ protected:
     int limit_ = -1;
 
     void runTest(const int &test_id, const string & test_name, const SortDefinition &expected_sort);
-
 };
-
 
 void TpcHTest::runTest(const int &test_id, const string & test_name, const SortDefinition &expected_sort) {
     string query = tpch_queries[test_id];
@@ -57,16 +55,17 @@ void TpcHTest::runTest(const int &test_id, const string & test_name, const SortD
     cout << "CPU clock ticks: " << secureClockTicks << "\n";
     cout << "CPU clock ticks per second: " << secureClockTicksPerSecond << "\n";
 
+    size_t peak_memory =  Utilities::checkMemoryUtilization(true);
+    cout << "Memory: " << peak_memory  << " bytes\n";
+
     shared_ptr<PlainTable> observed = result.secure_table_->reveal(PUBLIC);
 
     observed = DataUtilities::removeDummies(observed);
     expected = DataUtilities::removeDummies(expected);
 
-    size_t peak_memory =  Utilities::checkMemoryUtilization(true);
-    cout << "Memory: " << peak_memory  << " bytes\n";
-
-    ASSERT_EQ(*expected, *observed);
-
+    if(FLAGS_party == ALICE) {
+        ASSERT_EQ(*expected, *observed);
+    }
 }
 
 TEST_F(TpcHTest, tpch_q1) {

@@ -59,11 +59,11 @@ void SqlInput::runQuery() {
             throw std::invalid_argument("read empty input from \"" + input_query_ + "\"");
         }
 
-        output_ = ZkQueryTable(local_output, netio_,local_output->getTupleCount() * local_output->getSchema()->size(), party_);
+        output_ = ZkQueryTable(local_output, netio_, party_);
     }
     else {
         assert(party_ == BOB);
-        output_ = ZkQueryTable(*(local_output->getSchema()), sort_definition_, netio_, local_output->getTupleCount() * local_output->getSchema()->size(), party_);
+        output_ = ZkQueryTable(*(local_output->getSchema()), sort_definition_, netio_, party_);
     }
 
     double duration = time_from(startTime) / 1e6;
